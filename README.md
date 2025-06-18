@@ -1,11 +1,13 @@
 # Markdown Glossary Plugin
 
+![Screenshot of Markdown](https://github.com/reachkamrul/markdown-glossary/blob/screenshot.png)
+
 The Markdown Glossary Plugin enhances your VitePress documentation by automatically identifying and linking key terms to their definitions. When a user hovers over a linked term, a short descriptive tooltip appears, providing immediate context without navigating away from the page. Additionally, it provides a clear mechanism to prevent specific instances of terms from being linked.
 
 ## Features
 
 * Automatic Term Linking: Automatically identifies and links predefined glossary terms within your Markdown content.
-* On-Hover Tooltips: Displays a concise definition as a tooltip when a user hooves over a linked term.
+* On-Hover Tooltips: Displays a concise definition as a tooltip when a user hoover over a linked term.
 * Flexible Escaping: Allows specific instances of terms to be explicitly excluded from glossary linking using a simple `//term//` syntax.
 * Centralized Glossary: All term definitions are managed in a single JSON file, making updates and maintenance straightforward.
 * Customizable Appearance: Easily customize the look and feel of the linked terms and tooltips via CSS.
