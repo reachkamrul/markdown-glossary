@@ -3,7 +3,8 @@ title: Markdown Glossary Plugin
 outline: 3
 ---
 
-[//]: # (![Screenshot of Add Coupon Screen &#40;Fixed Type&#41;]&#40;/screenshot.png&#41;)
+[//]: # (![Screenshot of Markdown]&#40;/screenshot.png&#41;)
+
 
 # Markdown Glossary Plugin
 
