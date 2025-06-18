@@ -3,6 +3,8 @@ title: Markdown Glossary Plugin
 outline: 3
 ---
 
+[//]: # (![Screenshot of Add Coupon Screen &#40;Fixed Type&#41;]&#40;/screenshot.png&#41;)
+
 # Markdown Glossary Plugin
 
 The Markdown Glossary Plugin enhances your VitePress documentation by automatically identifying and linking key terms to their definitions. When a user hovers over a linked term, a short descriptive tooltip appears, providing immediate context without navigating away from the page. Additionally, it provides a clear mechanism to prevent specific instances of terms from being linked.
