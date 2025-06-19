@@ -60,9 +60,6 @@ const tooltipId = computed(() => `glossary-tooltip-${Math.random().toString(36).
   border-radius: 6px;
   z-index: 1000;
   white-space: nowrap;
-  /*font-weight: 300;*/
-  /*min-width: 150px;*/
-  /*max-width: 250px;*/
   box-shadow: var(--vp-shadow-3);
   top: auto;
   bottom: calc(100% + 10px);
@@ -101,4 +98,4 @@ const tooltipId = computed(() => `glossary-tooltip-${Math.random().toString(36).
     transform: translateX(-50%);
   }
 }
-</style>
+</style> 

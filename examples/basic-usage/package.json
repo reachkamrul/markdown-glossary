@@ -1,0 +1,16 @@
+{
+  "name": "vitepress-plugin-glossary-example",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Example usage of vitepress-plugin-glossary",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "dependencies": {
+    "vitepress": "^1.0.0",
+    "vitepress-plugin-glossary": "^1.0.4",
+    "vue": "^3.3.0"
+  }
+} 

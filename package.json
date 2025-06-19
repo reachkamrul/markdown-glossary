@@ -1,10 +1,69 @@
 {
+  "name": "vitepress-plugin-glossary",
+  "version": "1.0.6",
+  "type": "module",
+  "description": "A VitePress plugin that automatically identifies and links glossary terms with interactive tooltips",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./vue": "./src/GlossaryTooltip.vue"
+  },
+  "files": [
+    "dist",
+    "src/GlossaryTooltip.vue",
+    "README.md",
+    "INSTALLATION.md"
+  ],
+  "keywords": [
+    "vitepress",
+    "plugin",
+    "glossary",
+    "tooltip",
+    "documentation",
+    "markdown",
+    "vue"
+  ],
+  "author": "Kamrul Hasan",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reachkamrul/vitepress-plugin-glossary.git"
+  },
+  "bugs": {
+    "url": "https://github.com/reachkamrul/vitepress-plugin-glossary/issues"
+  },
+  "homepage": "https://github.com/reachkamrul/vitepress-plugin-glossary#readme",
   "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "prepublishOnly": "npm run build",
     "docs:dev": "vitepress dev",
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview"
   },
   "devDependencies": {
-    "vitepress": "^1.6.3"
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "rollup": "^4.9.1",
+    "rollup-plugin-dts": "^6.1.0",
+    "typescript": "^5.3.3",
+    "vitepress": "^1.0.0",
+    "vue": "^3.3.0"
+  },
+  "peerDependencies": {
+    "vitepress": "^1.0.0",
+    "vue": "^3.3.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {
+    "vitepress-plugin-glossary": "^1.0.5"
   }
 }

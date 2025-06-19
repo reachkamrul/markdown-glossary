@@ -1,5 +1,6 @@
 import { defineConfig } from 'vitepress';
-import { markdownGlossaryPlugin } from './plugins/markdown-glossary.js';
+import { markdownGlossaryPlugin } from 'vitepress-plugin-glossary';
+import glossary from './glossary.json';
 
 export default {
   title: ' ',
@@ -9,7 +10,8 @@ export default {
   markdown: {
     config: (md) => {
       md.use(markdownGlossaryPlugin, {
-        firstOccurrenceOnly: true  // Enable first occurrence only mode
+        glossary: glossary,
+        firstOccurrenceOnly: true
       });
     }
   },

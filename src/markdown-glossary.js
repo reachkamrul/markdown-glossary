@@ -1,27 +1,15 @@
-// .vitepress/plugins/markdown-glossary.js
-
-// Import Node.js path and file system modules.
-// These are used to read the glossary.json file during the Node.js build process.
-import { fileURLToPath } from 'node:url';
-import { resolve, dirname } from 'node:path';
-import fs from 'node:fs';
-
-// Get the current directory name, as `__dirname` is not available in ES modules.
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-// Resolve the path to our glossary.json file.
-// It's located one level up from the 'plugins' directory, in the '.vitepress' directory.
-const GLOSSARY_FILE_PATH = resolve(__dirname, '../glossary.json');
+// Markdown Glossary Plugin for VitePress
 
 /**
  * Loads glossary data from the JSON file.
  * This function will be called once when the VitePress build starts.
  * @returns {Record<string, string>} An object where keys are glossary terms and values are their definitions.
  */
-function loadGlossary() {
+function loadGlossary(glossaryPath) {
     try {
         // Read the file synchronously. This is acceptable as it runs during build time.
-        const data = fs.readFileSync(GLOSSARY_FILE_PATH, 'utf8');
+        const fs = require('fs');
+        const data = fs.readFileSync(glossaryPath, 'utf8');
         return JSON.parse(data);
     } catch (error) {
         console.error(`[VitePress Glossary Plugin] Failed to load glossary.json: ${error.message}`);
@@ -29,27 +17,15 @@ function loadGlossary() {
     }
 }
 
-// Load the glossary terms once when the plugin is initialized.
-const glossaryTerms = loadGlossary();
-
-// Create a regular expression from the glossary terms.
-// This regex will be used to efficiently find all defined terms in the Markdown content.
-// - `\b`: Word boundary to match whole words.
-// - `(${Object.keys(glossaryTerms).join('|')})`: Creates a non-capturing group with all terms
-//   joined by `|` (OR) operator. Terms are escaped to handle special regex characters if any.
-//   Note: For simplicity, basic escaping is not included here. For production,
-//   you might want a utility to escape regex special characters in terms.
-// - `gi`: Global (find all matches), Case-Insensitive (we'll handle case sensitivity in logic).
-//   We use `gi` here for the initial scan, but will enforce case sensitivity on the exact match later.
-const glossaryRegex = new RegExp(`\\b(${Object.keys(glossaryTerms).join('|')})\\b`, 'gi');
-
 /**
  * Markdown-it plugin for automatically linking glossary terms.
  * This plugin modifies the Markdown parsing and rendering process.
  *
  * @param {import('markdown-it')} md - The Markdown-it instance.
  * @param {Object} options - Plugin options
- * @param {boolean} options.firstOccurrenceOnly - If true, only the first occurrence of each term per page will be linked
+ * @param {string} [options.glossaryPath] - Path to the glossary.json file
+ * @param {Object} [options.glossary] - Direct glossary object where keys are terms and values are definitions
+ * @param {boolean} [options.firstOccurrenceOnly] - If true, only the first occurrence of each term per page will be linked
  */
 export const markdownGlossaryPlugin = (md, options = {}) => {
     const defaultTextRender = md.renderer.rules.text;
@@ -57,9 +33,16 @@ export const markdownGlossaryPlugin = (md, options = {}) => {
     
     // Default options
     const config = {
+        glossaryPath: './.vitepress/glossary.json',
         firstOccurrenceOnly: false,
         ...options
     };
+    
+    // Load the glossary terms - either from direct object or file
+    const glossaryTerms = config.glossary || (config.glossaryPath ? loadGlossary(config.glossaryPath) : {});
+    
+    // Create a regular expression from the glossary terms.
+    const glossaryRegex = new RegExp(`\\b(${Object.keys(glossaryTerms).join('|')})\\b`, 'gi');
     
     // Track processed terms per page (reset for each page)
     let processedTerms = new Set();
@@ -119,4 +102,4 @@ export const markdownGlossaryPlugin = (md, options = {}) => {
         }
         return originalRender.call(this, src, env);
     };
-};
+}; 

@@ -1,0 +1,9 @@
+{
+  "VitePress": "A Static Site Generator powered by Vite and Vue",
+  "Vue": "A Progressive JavaScript Framework",
+  "Markdown": "A lightweight markup language for creating formatted text",
+  "Plugin": "A software component that adds a specific feature to an existing program",
+  "Glossary": "An alphabetical list of terms with their definitions",
+  "Static Site": "A website that consists of pre-built HTML pages",
+  "Component": "A reusable piece of code that encapsulates functionality and UI"
+} 

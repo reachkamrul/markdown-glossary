@@ -6,4 +6,4 @@ export default {
     enhanceApp({ app }) {
         app.component('GlossaryTooltip', GlossaryTooltip);
     }
-};
+}; 
