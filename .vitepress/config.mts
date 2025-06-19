@@ -8,7 +8,9 @@ export default {
   base: '/',
   markdown: {
     config: (md) => {
-      md.use(markdownGlossaryPlugin);  // Apply glossary plugin
+      md.use(markdownGlossaryPlugin, {
+        firstOccurrenceOnly: true  // Enable first occurrence only mode
+      });
     }
   },
   themeConfig: {

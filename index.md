@@ -15,6 +15,7 @@ The Markdown Glossary Plugin enhances your VitePress documentation by automatica
 * Automatic Term Linking: Automatically identifies and links predefined glossary terms within your Markdown content.
 * On-Hover Tooltips: Displays a concise definition as a tooltip when a user hooves over a linked term.
 * Flexible Escaping: Allows specific instances of terms to be explicitly excluded from glossary linking using a simple `//term//` syntax.
+* First Occurrence Only: Optionally limit glossary linking to only the first occurrence of each term per page, preventing repetitive tooltips.
 * Centralized Glossary: All term definitions are managed in a single JSON file, making updates and maintenance straightforward.
 * Customizable Appearance: Easily customize the look and feel of the linked terms and tooltips via CSS.
 
@@ -296,13 +297,21 @@ export default defineConfig({
   markdown: {
     // The `config` function allows you to extend the Markdown-Glossary instance.
     config: (md) => {
-      md.use(markdownGlossaryPlugin); // Apply your glossary plugin
+      md.use(markdownGlossaryPlugin, {
+        firstOccurrenceOnly: true  // Enable first occurrence only mode
+      });
     }
   },
 
   // ... rest of your VitePress config
 });
 ```
+
+#### Plugin Options
+
+The Markdown Glossary Plugin supports the following configuration options:
+
+- **`firstOccurrenceOnly`** (boolean, default: `false`): When enabled, only the first occurrence of each glossary term per page will be linked with a tooltip. Subsequent occurrences of the same term will remain as plain text. This helps prevent repetitive tooltips and improves user experience.
 
 ### Linking Terms in Markdown
 Once a term is defined in `glossary.json` , simply use it as plain text in your Markdown files. The plugin will automatically identify it and apply the interactive tooltip.

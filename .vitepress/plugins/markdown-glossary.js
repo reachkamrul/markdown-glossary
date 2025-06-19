@@ -48,10 +48,21 @@ const glossaryRegex = new RegExp(`\\b(${Object.keys(glossaryTerms).join('|')})\\
  * This plugin modifies the Markdown parsing and rendering process.
  *
  * @param {import('markdown-it')} md - The Markdown-it instance.
+ * @param {Object} options - Plugin options
+ * @param {boolean} options.firstOccurrenceOnly - If true, only the first occurrence of each term per page will be linked
  */
-export const markdownGlossaryPlugin = (md) => {
+export const markdownGlossaryPlugin = (md, options = {}) => {
     const defaultTextRender = md.renderer.rules.text;
     const escapedTermRegex = /\/\/([^\/]+?)\/\//g;
+    
+    // Default options
+    const config = {
+        firstOccurrenceOnly: false,
+        ...options
+    };
+    
+    // Track processed terms per page (reset for each page)
+    let processedTerms = new Set();
 
     md.renderer.rules.text = (tokens, idx, options, env, self) => {
         const token = tokens[idx];
@@ -74,11 +85,21 @@ export const markdownGlossaryPlugin = (md) => {
             // Check if match is inside a no-glossary span
             const isEscaped = content.match(new RegExp(`<span class="no-glossary">${match}</span>`));
             if (isEscaped) {
-                return match; // Return the term as-is if it’s escaped
+                return match; // Return the term as-is if it's escaped
             }
 
             const exactTerm = Object.keys(glossaryTerms).find(term => term === match);
             if (exactTerm) {
+                // Check if first occurrence only is enabled and term was already processed
+                if (config.firstOccurrenceOnly && processedTerms.has(exactTerm)) {
+                    return match; // Return the term as-is if already processed
+                }
+                
+                // Mark this term as processed
+                if (config.firstOccurrenceOnly) {
+                    processedTerms.add(exactTerm);
+                }
+                
                 const description = glossaryTerms[exactTerm];
                 return `<GlossaryTooltip description="${encodeURIComponent(description)}">${match}</GlossaryTooltip>`;
             }
@@ -87,5 +108,15 @@ export const markdownGlossaryPlugin = (md) => {
 
         // Return the modified HTML content
         return content;
+    };
+    
+    // Reset processed terms when a new page starts
+    const originalRender = md.render;
+    md.render = function(src, env) {
+        // Reset processed terms for each new page
+        if (config.firstOccurrenceOnly) {
+            processedTerms.clear();
+        }
+        return originalRender.call(this, src, env);
     };
 };
